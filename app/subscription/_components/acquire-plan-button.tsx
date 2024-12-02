@@ -37,6 +37,7 @@ const AcquirePlanButton = () => {
     <Button
       className="w-full rounded-full font-bold"
       onClick={handleAcquirePlanClick}
+      disabled
     >
       Adquirir plano
     </Button>

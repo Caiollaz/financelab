@@ -50,6 +50,7 @@ const SubscriptionPage = async () => {
                   Ativo
                 </Badge>
               )}
+              <h1 className="text-center font-bold text-primary">Em breve</h1>
               <h2 className="text-center text-2xl font-semibold">
                 Plano Premium
               </h2>
