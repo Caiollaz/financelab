@@ -85,7 +85,7 @@ const UpsertTransactionDialog = ({
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues ?? {
-      amount: 50,
+      amount: 0,
       category: TransactionCategory.OTHER,
       date: new Date(),
       name: "",
@@ -117,7 +117,7 @@ const UpsertTransactionDialog = ({
       }}
     >
       <DialogTrigger asChild></DialogTrigger>
-      <DialogContent>
+      <DialogContent className="max-h-[100vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
             {isUpdate ? "Atualizar" : "Criar"} transação
@@ -126,7 +126,7 @@ const UpsertTransactionDialog = ({
         </DialogHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
               control={form.control}
               name="name"
@@ -173,7 +173,7 @@ const UpsertTransactionDialog = ({
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select a verified email to display" />
+                        <SelectValue placeholder="Selecione..." />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -200,7 +200,7 @@ const UpsertTransactionDialog = ({
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Selecione a categoria..." />
+                        <SelectValue placeholder="Selecione..." />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -227,7 +227,7 @@ const UpsertTransactionDialog = ({
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Selecione um método de pagamento..." />
+                        <SelectValue placeholder="Selecione..." />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -253,7 +253,7 @@ const UpsertTransactionDialog = ({
                 </FormItem>
               )}
             />
-            <DialogFooter>
+            <DialogFooter className="flex flex-col gap-2 sm:flex-row">
               <DialogClose asChild>
                 <Button type="button" variant="outline">
                   Cancelar
