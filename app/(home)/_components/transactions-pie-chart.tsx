@@ -14,7 +14,7 @@ import { TransactionPercentagePerType } from "@/app/_data/get-dashboard/types";
 import { PiggyBankIcon, TrendingDownIcon, TrendingUpIcon } from "lucide-react";
 import PercentageItem from "./percentage-item";
 
-const chartConfig = {
+const chartConfig: ChartConfig = {
   [TransactionType.INVESTMENT]: {
     label: "Investido",
     color: "#FFFFFF",
@@ -27,7 +27,7 @@ const chartConfig = {
     label: "Despesas",
     color: "#E93030",
   },
-} satisfies ChartConfig;
+};
 
 interface TransactionsPieChartProps {
   typesPercentage: TransactionPercentagePerType;
@@ -46,25 +46,26 @@ const TransactionsPieChart = ({
     {
       type: TransactionType.DEPOSIT,
       amount: depositsTotal,
-      fill: "#55B02E",
+      fill: chartConfig[TransactionType.DEPOSIT].color,
     },
     {
       type: TransactionType.EXPENSE,
       amount: expensesTotal,
-      fill: "#E93030",
+      fill: chartConfig[TransactionType.EXPENSE].color,
     },
     {
       type: TransactionType.INVESTMENT,
       amount: investmentsTotal,
-      fill: "#FFFFFF",
+      fill: chartConfig[TransactionType.INVESTMENT].color,
     },
   ];
+
   return (
-    <Card className="flex flex-col p-6">
-      <CardContent className="flex-1 pb-0">
+    <Card className="flex flex-col p-4 md:p-6">
+      <CardContent className="flex flex-col items-center space-y-6">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px]"
+          className="aspect-square w-full max-w-[250px] md:max-w-[300px]"
         >
           <PieChart>
             <ChartTooltip
@@ -80,7 +81,7 @@ const TransactionsPieChart = ({
           </PieChart>
         </ChartContainer>
 
-        <div className="space-y-3">
+        <div className="w-full space-y-4">
           <PercentageItem
             icon={<TrendingUpIcon size={16} className="text-primary" />}
             title="Receita"

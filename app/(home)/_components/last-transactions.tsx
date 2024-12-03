@@ -21,25 +21,31 @@ const LastTransactions = ({ lastTransactions }: LastTransactionsProps) => {
     }
     return "text-white";
   };
+
   const getAmountPrefix = (transaction: Transaction) => {
     if (transaction.type === TransactionType.DEPOSIT) {
       return "+";
     }
     return "-";
   };
+
   return (
     <ScrollArea className="rounded-md border">
-      <CardHeader className="flex-row items-center justify-between">
-        <CardTitle className="font-bold">Últimas Transações</CardTitle>
-        <Button variant="outline" className="rounded-full font-bold" asChild>
+      <CardHeader className="flex flex-row items-center justify-between p-4">
+        <CardTitle className="text-lg font-bold">Últimas Transações</CardTitle>
+        <Button
+          variant="outline"
+          className="rounded-full text-sm font-bold"
+          asChild
+        >
           <Link href="/transactions">Ver mais</Link>
         </Button>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-4 px-4">
         {lastTransactions.map((transaction) => (
           <div
             key={transaction.id}
-            className="flex items-center justify-between"
+            className="flex flex-wrap items-center justify-between gap-3"
           >
             <div className="flex items-center gap-3">
               <div className="rounded-lg bg-white bg-opacity-[3%] p-3 text-white">
@@ -50,8 +56,8 @@ const LastTransactions = ({ lastTransactions }: LastTransactionsProps) => {
                   alt="PIX"
                 />
               </div>
-              <div>
-                <p className="text-sm font-bold">{transaction.name}</p>
+              <div className="truncate">
+                <p className="truncate text-sm font-bold">{transaction.name}</p>
                 <p className="text-sm text-muted-foreground">
                   {new Date(transaction.date).toLocaleDateString("pt-BR", {
                     day: "2-digit",
@@ -61,7 +67,9 @@ const LastTransactions = ({ lastTransactions }: LastTransactionsProps) => {
                 </p>
               </div>
             </div>
-            <p className={`text-sm font-bold ${getAmountColor(transaction)}`}>
+            <p
+              className={`text-sm font-bold ${getAmountColor(transaction)} break-words`}
+            >
               {getAmountPrefix(transaction)}
               {formatCurrency(Number(transaction.amount))}
             </p>

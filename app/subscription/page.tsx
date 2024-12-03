@@ -13,14 +13,16 @@ const SubscriptionPage = async () => {
   }
   const user = await clerkClient().users.getUser(userId);
   const hasPremiumPlan = user.publicMetadata.subscriptionPlan == "premium";
+
   return (
     <>
       <Navbar />
       <div className="space-y-6 p-6">
         <h1 className="text-2xl font-bold">Assinatura</h1>
 
-        <div className="flex gap-6">
-          <Card className="w-[450px]">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+          {/* Card Plano Básico */}
+          <Card className="w-full">
             <CardHeader className="border-b border-solid py-8">
               <h2 className="text-center text-2xl font-semibold">
                 Plano Básico
@@ -43,7 +45,8 @@ const SubscriptionPage = async () => {
             </CardContent>
           </Card>
 
-          <Card className="w-[450px]">
+          {/* Card Plano Premium */}
+          <Card className="w-full">
             <CardHeader className="relative border-b border-solid py-8">
               {hasPremiumPlan ? (
                 <div className="flex items-center justify-center">

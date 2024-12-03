@@ -18,18 +18,24 @@ const SummaryCard = ({
   userCanAddTransaction,
 }: SummaryCardProps) => {
   return (
-    <Card>
-      <CardHeader className="flex-row items-center gap-4">
+    <Card className="p-4 sm:p-6 lg:p-8">
+      <CardHeader className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
         {icon}
         <p
-          className={`${size === "small" ? "text-muted-foreground" : "text-white opacity-70"}`}
+          className={`${
+            size === "small"
+              ? "text-sm text-muted-foreground sm:text-base"
+              : "text-lg text-white opacity-70 sm:text-xl"
+          }`}
         >
           {title}
         </p>
       </CardHeader>
-      <CardContent className="flex justify-between">
+      <CardContent className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p
-          className={`font-bold ${size === "small" ? "text-2xl" : "text-4xl"}`}
+          className={`font-bold ${
+            size === "small" ? "text-2xl sm:text-3xl" : "text-4xl sm:text-5xl"
+          }`}
         >
           {Intl.NumberFormat("pt-BR", {
             style: "currency",

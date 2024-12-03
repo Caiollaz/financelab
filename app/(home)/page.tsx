@@ -19,40 +19,47 @@ interface HomeProps {
 
 const Home = async ({ searchParams: { month } }: HomeProps) => {
   const { userId } = await auth();
+
   if (!userId) {
     redirect("/login");
   }
+
   const monthIsInvalid = !month || !isMatch(month, "MM");
+
   if (monthIsInvalid) {
     redirect(`?month=${new Date().getMonth() + 1}`);
   }
+
   const dashboard = await getDashboard(month);
   const userCanAddTransaction = await canUserAddTransaction();
   const user = await clerkClient().users.getUser(userId);
+
   return (
     <>
       <Navbar />
-      <div className="flex h-full flex-col space-y-6 overflow-hidden p-6">
+      <div className="flex h-full flex-col space-y-6 p-6">
         <div className="flex justify-between">
           <h1 className="text-2xl font-bold">Dashboard</h1>
           <div className="flex items-center gap-3">
-            <AiReportButton
-              month={month}
-              hasPremiumPlan={
-                user.publicMetadata.subscriptionPlan === "premium"
-              }
-            />
+            <div className="hidden md:block">
+              <AiReportButton
+                month={month}
+                hasPremiumPlan={
+                  user.publicMetadata.subscriptionPlan === "premium"
+                }
+              />
+            </div>
             <TimeSelect />
           </div>
         </div>
-        <div className="grid h-full grid-cols-[2fr,1fr] gap-6 overflow-hidden">
-          <div className="flex flex-col gap-6 overflow-hidden">
+        <div className="sx:grid-cols-1 grid h-full gap-4 sm:grid-cols-1 lg:grid-cols-2">
+          <div className="flex flex-col gap-4">
             <SummaryCards
               month={month}
               {...dashboard}
               userCanAddTransaction={userCanAddTransaction}
             />
-            <div className="grid h-full grid-cols-3 grid-rows-1 gap-6 overflow-hidden">
+            <div className="grid h-full grid-cols-1 grid-rows-1 gap-y-4 md:gap-4 lg:grid-cols-3">
               <TransactionsPieChart {...dashboard} />
               <ExpensesPerCategory
                 expensesPerCategory={dashboard.totalExpensePerCategory}

@@ -11,12 +11,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/app/_components/ui/dialog";
-import { BotIcon, Loader2Icon } from "lucide-react";
-import { generateAiReport } from "../_actions/generate-ai-report";
-import { useState } from "react";
 import { ScrollArea } from "@/app/_components/ui/scroll-area";
-import Markdown from "react-markdown";
+import { BotIcon, Loader2Icon } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
+import Markdown from "react-markdown";
+import { generateAiReport } from "../_actions/generate-ai-report";
 
 interface AiReportButtonProps {
   hasPremiumPlan: boolean;
@@ -26,11 +26,11 @@ interface AiReportButtonProps {
 const AiReportButton = ({ month, hasPremiumPlan }: AiReportButtonProps) => {
   const [report, setReport] = useState<string | null>(null);
   const [reportIsLoading, setReportIsLoading] = useState(false);
+
   const handleGenerateReportClick = async () => {
     try {
       setReportIsLoading(true);
       const aiReport = await generateAiReport({ month });
-      console.log({ aiReport });
       setReport(aiReport);
     } catch (error) {
       console.error(error);
@@ -38,6 +38,7 @@ const AiReportButton = ({ month, hasPremiumPlan }: AiReportButtonProps) => {
       setReportIsLoading(false);
     }
   };
+
   return (
     <Dialog
       onOpenChange={(open) => {
@@ -47,12 +48,12 @@ const AiReportButton = ({ month, hasPremiumPlan }: AiReportButtonProps) => {
       }}
     >
       <DialogTrigger asChild>
-        <Button variant="ghost">
+        <Button variant="ghost" className="flex items-center gap-2">
           Relatório IA
           <BotIcon />
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-[600px]">
+      <DialogContent className="w-full max-w-[600px]">
         {hasPremiumPlan ? (
           <>
             <DialogHeader>
@@ -65,16 +66,17 @@ const AiReportButton = ({ month, hasPremiumPlan }: AiReportButtonProps) => {
             <ScrollArea className="prose max-h-[450px] text-white prose-h3:text-white prose-h4:text-white prose-strong:text-white">
               <Markdown>{report}</Markdown>
             </ScrollArea>
-            <DialogFooter>
+            <DialogFooter className="space-x-2">
               <DialogClose asChild>
                 <Button variant="ghost">Cancelar</Button>
               </DialogClose>
               <Button
                 onClick={handleGenerateReportClick}
                 disabled={reportIsLoading}
+                className="flex items-center gap-2"
               >
                 {reportIsLoading && <Loader2Icon className="animate-spin" />}
-                Gerar relatório
+                {reportIsLoading ? "Gerando..." : "Gerar relatório"}
               </Button>
             </DialogFooter>
           </>
@@ -86,7 +88,7 @@ const AiReportButton = ({ month, hasPremiumPlan }: AiReportButtonProps) => {
                 Você precisa de um plano premium para gerar relatórios com IA.
               </DialogDescription>
             </DialogHeader>
-            <DialogFooter>
+            <DialogFooter className="space-x-2">
               <DialogClose asChild>
                 <Button variant="ghost">Cancelar</Button>
               </DialogClose>

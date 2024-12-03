@@ -16,17 +16,19 @@ const ExpensesPerCategory = ({
       <CardHeader>
         <CardTitle className="font-bold">Gastos por Categoria</CardTitle>
       </CardHeader>
-
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-4 px-4">
         {expensesPerCategory.map((category) => (
           <div key={category.category} className="space-y-2">
-            <div className="flex w-full justify-between">
-              <p className="text-sm font-bold">
+            <div className="flex items-center justify-between text-sm">
+              <p className="truncate font-bold">
                 {TRANSACTION_CATEGORY_LABELS[category.category]}
               </p>
-              <p className="text-sm font-bold">{category.percentageOfTotal}%</p>
+              <p className="font-bold">{category.percentageOfTotal}%</p>
             </div>
-            <Progress value={category.percentageOfTotal} />
+            <Progress
+              value={category.percentageOfTotal}
+              className="h-2 rounded-full"
+            />
           </div>
         ))}
       </CardContent>
